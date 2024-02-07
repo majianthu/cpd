@@ -4,6 +4,7 @@ library(ecp)
 library(mnormt)
 library(copula)
 
+# single change point detection
 cpd <- function(x,thd=0.13,n=30){
   result = {}
   x = as.matrix(x)
@@ -23,6 +24,7 @@ cpd <- function(x,thd=0.13,n=30){
   return(result)
 }
 
+# multiple change point detection
 mcpd <- function(x,maxp=5,thd=0.13,minseglen=10,n=30){
   mresult = {}
   x = as.matrix(x)
