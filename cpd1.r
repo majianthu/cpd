@@ -96,7 +96,7 @@ x = rbind(x1,x2,x3,x4)
 mresult2 = mcpd(x)
 kcp1 = kcpa(x,5,200)
 
-# case 2: var
+# case 3: var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
 x2 = rmnorm(n1,c(0,0),matrix(c(1,rho2,rho2,1),2,2))
 x3 = rmnorm(n1,c(0,0),matrix(c(1,rho3,rho3,1),2,2))
@@ -105,7 +105,7 @@ x = rbind(x1,x2,x3,x4)
 mresult2 = mcpd(x,thd = 0.05)
 kcp1 = kcpa(x,5,200)
 
-# case 3: with non-normality
+# case 4: with non-normality
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
 mv.cop <- mvdc(frankCopula(0.9), c("norm", "exp"), list(list(mean = 0, sd =2), list(rate = 0.5)))
 x2 <- rMvdc(n1, mv.cop)
