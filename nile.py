@@ -16,7 +16,7 @@ print(pos)
 
 plt.subplot(2,1,1)
 plt.plot(year,nile)
-m1 = np.mean(nile[0:pos-1])
+m1 = np.mean(nile[0:(pos-1)])
 m2 = np.mean(nile[pos:])
 pos = pos + 1870
 plt.plot([1871,pos],[m1,m1], linestyle = '--', color = 'r')
