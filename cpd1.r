@@ -3,8 +3,8 @@ library(changepoint)
 library(ecp)
 library(mnormt)
 library(copula)
+library(rid)
 
-# single change point detection
 cpd <- function(x,thd=0.13,n=30){
   result = {}
   x = as.matrix(x)
@@ -24,7 +24,6 @@ cpd <- function(x,thd=0.13,n=30){
   return(result)
 }
 
-# multiple change point detection
 mcpd <- function(x,maxp=5,thd=0.13,minseglen=10,n=30){
   mresult = {}
   x = as.matrix(x)
@@ -67,14 +66,20 @@ lines(x=c(result1$pos,result1$pos)-1, y=c(0,result1$maxstat),col='red')
 x=c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1))
 mresult1 = mcpd(x)
 cpt1 = cpt.mean(x, method = "BinSeg", Q = 5)
+d = rid(x, M = 1000, tau = "clustering")
+rid1 = localization(x,d$Good_Intervals)
 # case 2: mean-var
 x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
 mresult1 = mcpd(x)
 cpt1 = cpt.meanvar(x, method = "BinSeg", Q = 5)
+d = rid(x, M = 1000, tau = "clustering")
+rid1 = localization(x,d$Good_Intervals)
 # case 3: var
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
 mresult1 = mcpd(x)
 cpt1 = cpt.var(x, method = "BinSeg", Q = 5)
+d = rid(x, M = 1000, tau = "clustering")
+rid1 = localization(x,d$Good_Intervals)
 
 ### multivariate multiple change points
 rho1 = 0.2; rho2 = 0.8; rho3 = 0.1; rho4 = 0.9
@@ -88,6 +93,8 @@ x4 = rmnorm(n1,c(1,0),matrix(c(1,rho1,rho1,1),2,2))
 x = rbind(x1,x2,x3,x4)
 mresult2 = mcpd(x)
 kcp1 = kcpa(x,5,500)
+d = rid(t(x), M = 1000, tau = "clustering")
+rid1 = localization(x, d$Good_Intervals)
 
 # case 2: mean-var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -97,6 +104,8 @@ x4 = rmnorm(n1,c(1,0),matrix(c(1,rho4,rho4,1),2,2))
 x = rbind(x1,x2,x3,x4)
 mresult2 = mcpd(x)
 kcp1 = kcpa(x,5,200)
+d = rid(t(x), M = 1000, tau = "clustering")
+rid1 = localization(x, d$Good_Intervals)
 
 # case 3: var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -106,6 +115,8 @@ x4 = rmnorm(n1,c(0,0),matrix(c(1,rho4,rho4,1),2,2))
 x = rbind(x1,x2,x3,x4)
 mresult2 = mcpd(x,thd = 0.05)
 kcp1 = kcpa(x,5,200)
+d = rid(t(x), M = 1000, tau = "clustering")
+rid1 = localization(x, d$Good_Intervals)
 
 # case 4: with non-normality
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -117,3 +128,5 @@ x4 <- rMvdc(n1, mv.cop)
 x = rbind(x1,x2,x3,x4)
 mresult2 = mcpd(x)
 kcp1 = kcpa(x,5,500)
+d = rid(t(x), M = 1000, tau = "clustering")
+rid1 = localization(x, d$Good_Intervals)
