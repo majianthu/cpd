@@ -8,6 +8,8 @@ library(CptNonPar)
 library(npwbs)
 library(MFT)
 library(jcp)
+library(InspectChangepoint)
+library(hdbinseg)
 
 cpd <- function(x,thd=0.13,n=30){
   result = {}
@@ -76,6 +78,9 @@ npmojo1 = np.mojo.multilag(x,30)$cpts[,1]
 npwbs1 = detectChanges(x)
 mft1 = MFT.mean(x)$CP[,1]
 jcp1 = jcp(x)$SFA[[1]]
+thd1 = compute.threshold(200,1)
+inspect1 = inspect(x,thd1)
+
 # case 2: mean-var
 x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
 mresult1 = mcpd(x)
@@ -85,6 +90,8 @@ rid1 = localization(x,d$Good_Intervals)
 npmojo1 = np.mojo.multilag(x,30)$cpts[,1]
 npwbs1 = detectChanges(x)
 jcp1 = jcp(x)$SFA[[1]]
+thd1 = compute.threshold(200,1)
+inspect1 = inspect(x,thd1)
 # case 3: var
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
 mresult1 = mcpd(x)
@@ -94,6 +101,8 @@ rid1 = localization(x,d$Good_Intervals)
 npmojo1 = np.mojo.multilag(x,30)$cpts[,1]
 npwbs1 = detectChanges(x)
 jcp1 = jcp(x)$SFA[[1]]
+thd1 = compute.threshold(200,1)
+inspect1 = inspect(x,thd1)
 
 ### multivariate multiple change points
 rho1 = 0.2; rho2 = 0.8; rho3 = 0.1; rho4 = 0.9
@@ -112,6 +121,10 @@ rid1 = localization(x, d$Good_Intervals)
 npmojo1 = np.mojo.multilag(x,30)$cpts[,1]
 hdcp1 = binary.segmentation(x)
 hdcp2 = wild.binary.segmentation(x)
+thd1 = compute.threshold(200,2)
+inspect1 = inspect(t(x),thd1)
+dcbs1 = dcbs.alg(t(x))
+sbs1 = sbs.alg(t(x))
 
 # case 2: mean-var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -126,6 +139,10 @@ rid1 = localization(x, d$Good_Intervals)
 npmojo1 = np.mojo.multilag(x,30)$cpts[,1]
 hdcp1 = binary.segmentation(x)
 hdcp2 = wild.binary.segmentation(x)
+thd1 = compute.threshold(200,2)
+inspect1 = inspect(t(x),thd1)
+dcbs1 = dcbs.alg(t(x))
+sbs1 = sbs.alg(t(x))
 
 # case 3: var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -140,6 +157,10 @@ rid1 = localization(x, d$Good_Intervals)
 npmojo1 = np.mojo.multilag(x,30)$cpts[,1]
 hdcp1 = binary.segmentation(x)
 hdcp2 = wild.binary.segmentation(x)
+thd1 = compute.threshold(200,2)
+inspect1 = inspect(t(x),thd1)
+dcbs1 = dcbs.alg(t(x))
+sbs1 = sbs.alg(t(x))
 
 # case 4: with non-normality
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -156,4 +177,7 @@ rid1 = localization(x, d$Good_Intervals)
 npmojo1 = np.mojo.multilag(x,30)$cpts[,1]
 hdcp1 = binary.segmentation(x)
 hdcp2 = wild.binary.segmentation(x)
-
+thd1 = compute.threshold(200,2)
+inspect1 = inspect(t(x),thd1)
+dcbs1 = dcbs.alg(t(x))
+sbs1 = sbs.alg(t(x))
