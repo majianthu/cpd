@@ -11,6 +11,7 @@ library(jcp)
 library(InspectChangepoint)
 library(hdbinseg)
 library(changepoint.np)
+library(mosum)
 
 cpd <- function(x,thd=0.13,n=30){
   result = {}
