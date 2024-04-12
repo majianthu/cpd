@@ -13,6 +13,7 @@ library(hdbinseg)
 library(changepoint.np)
 library(changepoint.geo)
 library(mosum)
+library(SNSeg)
 
 cpd <- function(x,thd=0.13,n=30){
   result = {}
@@ -85,6 +86,7 @@ thd1 = compute.threshold(200,1)
 inspect1 = inspect(x,thd1)
 cptnp1 = cpt.np(x)
 mosum1 = mosum(x,G=20)
+snseg1 = SNSeg_Uni(x, paras_to_test = "mean")$est_cp
 
 # case 2: mean-var
 x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
@@ -99,6 +101,7 @@ thd1 = compute.threshold(200,1)
 inspect1 = inspect(x,thd1)
 cptnp1 = cpt.np(x)
 mosum1 = mosum(x,G=40)
+snseg1 = SNSeg_Uni(x, paras_to_test = c("mean","variance"))$est_cp
 
 # case 3: var
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
@@ -113,6 +116,7 @@ thd1 = compute.threshold(200,1)
 inspect1 = inspect(x,thd1)
 cptnp1 = cpt.np(x)
 mosum1 = mosum(x,G=50)
+snseg1 = SNSeg_Uni(x, paras_to_test = "variance")$est_cp
 
 ### multivariate multiple change points
 rho1 = 0.2; rho2 = 0.8; rho3 = 0.1; rho4 = 0.9
@@ -136,6 +140,7 @@ inspect1 = inspect(t(x),thd1)
 dcbs1 = dcbs.alg(t(x))
 sbs1 = sbs.alg(t(x))
 geomcp1 = geomcp(x)
+snseg1 = SNSeg_Multi(x, paras_to_test = "mean")$est_cp
 
 # case 2: mean-var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -155,6 +160,7 @@ inspect1 = inspect(t(x),thd1)
 dcbs1 = dcbs.alg(t(x))
 sbs1 = sbs.alg(t(x))
 geomcp1 = geomcp(x)
+snseg1 = SNSeg_Multi(x, paras_to_test = "mean")$est_cp
 
 # case 3: var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -174,6 +180,7 @@ inspect1 = inspect(t(x),thd1)
 dcbs1 = dcbs.alg(t(x))
 sbs1 = sbs.alg(t(x))
 geomcp1 = geomcp(x)
+snseg1 = SNSeg_Multi(x, paras_to_test = "covariance")$est_cp
 
 # case 4: with non-normality
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
