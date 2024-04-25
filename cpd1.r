@@ -14,6 +14,7 @@ library(changepoint.np)
 library(changepoint.geo)
 library(mosum)
 library(SNSeg)
+library(offlineChange)
 
 cpd <- function(x,thd=0.13,n=30){
   result = {}
@@ -69,7 +70,6 @@ lines(x=1870+c(result1$pos,length(Nile)),y=rep(mean(Nile[(result1$pos+1):length(
 plot(result1$stats, type = "l", xaxt = "n", xlab = "Time", ylab = "statistic", main = "Statistics")
 axis(1, at = seq(9,90,by = 20), labels = seq(1880,1960,by = 20))
 lines(x=c(result1$pos,result1$pos)-1, y=c(0,result1$maxstat),col='red')
-
 
 ### univariate multiple change points
 # case 1: mean
@@ -141,6 +141,7 @@ dcbs1 = dcbs.alg(t(x))
 sbs1 = sbs.alg(t(x))
 geomcp1 = geomcp(x)
 snseg1 = SNSeg_Multi(x, paras_to_test = "mean")$est_cp
+offline1 = ChangePoints(x)$change_point
 
 # case 2: mean-var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -161,6 +162,7 @@ dcbs1 = dcbs.alg(t(x))
 sbs1 = sbs.alg(t(x))
 geomcp1 = geomcp(x)
 snseg1 = SNSeg_Multi(x, paras_to_test = "mean")$est_cp
+offline1 = ChangePoints(x)$change_point
 
 # case 3: var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -181,6 +183,7 @@ dcbs1 = dcbs.alg(t(x))
 sbs1 = sbs.alg(t(x))
 geomcp1 = geomcp(x)
 snseg1 = SNSeg_Multi(x, paras_to_test = "covariance")$est_cp
+offline1 = ChangePoints(x)$change_point
 
 # case 4: with non-normality
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
