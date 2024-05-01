@@ -15,6 +15,10 @@ library(changepoint.geo)
 library(mosum)
 library(SNSeg)
 library(offlineChange)
+library(IDetect)
+library(wbs)
+library(breakfast)
+library(mscp)
 
 cpd <- function(x,thd=0.13,n=30){
   result = {}
@@ -87,6 +91,11 @@ inspect1 = inspect(x,thd1)
 cptnp1 = cpt.np(x)
 mosum1 = mosum(x,G=20)
 snseg1 = SNSeg_Uni(x, paras_to_test = "mean")$est_cp
+idpcm1 = ID_pcm(x)$cpt
+sbs1 = changepoints(sbs(x))$cpt.th[[1]]
+wbs1 = changepoints(wbs(x))$cpt.th[[1]]
+breakfast1 = breakfast(x)$cptmodel.list
+mscp1 = mscp(x)
 
 # case 2: mean-var
 x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
