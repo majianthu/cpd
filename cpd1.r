@@ -19,6 +19,7 @@ library(IDetect)
 library(wbs)
 library(breakfast)
 library(mscp)
+library(L2hdchange)
 
 cpd <- function(x,thd=0.13,n=30){
   result = {}
@@ -87,7 +88,7 @@ npwbs1 = detectChanges(x)
 mft1 = MFT.mean(x)$CP[,1]
 jcp1 = jcp(x)$SFA[[1]]
 thd1 = compute.threshold(200,1)
-inspect1 = inspect(x,thd1)
+inspect1 = inspect(x,thd1)$changepoints[,1]
 cptnp1 = cpt.np(x)
 mosum1 = mosum(x,G=20)
 snseg1 = SNSeg_Uni(x, paras_to_test = "mean")$est_cp
@@ -151,6 +152,8 @@ sbs1 = sbs.alg(t(x))
 geomcp1 = geomcp(x)
 snseg1 = SNSeg_Multi(x, paras_to_test = "mean")$est_cp
 offline1 = ChangePoints(x)$change_point
+ts_no_nbd1 = ts_hdchange(t(x))
+hdchange1 = hdchange(ts_no_nbd1)$time_stamps
 
 # case 2: mean-var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -172,6 +175,9 @@ sbs1 = sbs.alg(t(x))
 geomcp1 = geomcp(x)
 snseg1 = SNSeg_Multi(x, paras_to_test = "mean")$est_cp
 offline1 = ChangePoints(x)$change_point
+ts_no_nbd1 = ts_hdchange(t(x))
+hdchange1 = hdchange(ts_no_nbd1)$time_stamps
+
 
 # case 3: var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -193,6 +199,9 @@ sbs1 = sbs.alg(t(x))
 geomcp1 = geomcp(x)
 snseg1 = SNSeg_Multi(x, paras_to_test = "covariance")$est_cp
 offline1 = ChangePoints(x)$change_point
+ts_no_nbd1 = ts_hdchange(t(x))
+hdchange1 = hdchange(ts_no_nbd1)$time_stamps
+
 
 # case 4: with non-normality
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
