@@ -28,9 +28,8 @@ cpd <- function(x,thd=0.13,n=30){
   len1 = dim(x)[1]
   stat1 = rep(0,len1-1)
   
-  ncore = detectCores()
-  cl = makeCluster(ncore)
-  registerDoParallel(cl)
+  ncores = detectCores()
+  registerDoParallel(cores=ncores)
   
   stat1 = foreach(i=2:(len1-2)) %dopar%{
     s0 = as.matrix(x[1:i,])
