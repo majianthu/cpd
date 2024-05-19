@@ -41,7 +41,7 @@ cpd <- function(x,thd=0.13,n=30){
   if(max(stat1)>thd){
     result$stats = stat1
     result$maxstat = max(stat1)
-    result$pos = which(stat1 == max(stat1))+1
+    result$pos = which(stat1 == max(stat1))+2
   }
   
   return(result)
