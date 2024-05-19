@@ -1,3 +1,4 @@
+library(doParallel)
 library(copent)
 library(changepoint)
 library(ecp)
@@ -26,11 +27,18 @@ cpd <- function(x,thd=0.13,n=30){
   x = as.matrix(x)
   len1 = dim(x)[1]
   stat1 = rep(0,len1-1)
-  for(i in 2:(len1-2)){
+  
+  ncore = detectCores()
+  cl = makeCluster(ncore)
+  registerDoParallel(cl)
+  
+  stat1 = foreach(i=2:(len1-2)) %dopar%{
     s0 = as.matrix(x[1:i,])
     s1 = as.matrix(x[(i+1):len1,])
-    stat1[i] = tst(s0,s1,n)
+    copent::tst(s0,s1,n)
   }
+
+  stat1 = unlist(stat1)
   if(max(stat1)>thd){
     result$stats = stat1
     result$maxstat = max(stat1)
