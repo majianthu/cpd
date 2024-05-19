@@ -37,11 +37,11 @@ cpd <- function(x,thd=0.13,n=30){
     copent::tst(s0,s1,n)
   }
 
-  stat1 = unlist(stat1)
+  stat1 = c(0,unlist(stat1))
   if(max(stat1)>thd){
     result$stats = stat1
     result$maxstat = max(stat1)
-    result$pos = which(stat1 == max(stat1))+2
+    result$pos = which(stat1 == max(stat1))+1
   }
   
   return(result)
