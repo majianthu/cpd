@@ -21,6 +21,7 @@ library(wbs)
 library(breakfast)
 library(mscp)
 library(L2hdchange)
+library(fpop)
 
 cpd <- function(x,thd=0.13,n=30){
   result = {}
@@ -104,6 +105,7 @@ sbs1 = changepoints(sbs(x))$cpt.th[[1]]
 wbs1 = changepoints(wbs(x))$cpt.th[[1]]
 breakfast1 = breakfast(x)$cptmodel.list
 mscp1 = mscp(x)
+fpop1 = Fpop(x,n1*4)$t.est
 
 # case 2: mean-var
 x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
@@ -119,6 +121,7 @@ inspect1 = inspect(x,thd1)
 cptnp1 = cpt.np(x)
 mosum1 = mosum(x,G=40)
 snseg1 = SNSeg_Uni(x, paras_to_test = c("mean","variance"))$est_cp
+fpop1 = Fpop(x,n1*4)$t.est
 
 # case 3: var
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
@@ -134,6 +137,7 @@ inspect1 = inspect(x,thd1)
 cptnp1 = cpt.np(x)
 mosum1 = mosum(x,G=50)
 snseg1 = SNSeg_Uni(x, paras_to_test = "variance")$est_cp
+fpop1 = Fpop(x,n1*4)$t.est
 
 ### multivariate multiple change points
 rho1 = 0.2; rho2 = 0.8; rho3 = 0.1; rho4 = 0.9
