@@ -40,7 +40,6 @@ cpd <- function(x,thd=0.13,n=15,k=3,dt=2){
   
   return(result)
 }
-}
 
 mcpd <- function(x,maxp=5,thd=0.13,minseglen=10,n=30,k=3,dt=2){
   mresult = {}
