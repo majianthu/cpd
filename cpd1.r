@@ -23,13 +23,13 @@ library(mscp)
 library(L2hdchange)
 library(fpop)
 
-cpd <- function(x,thd=0.13,n=15){
+cpd <- function(x,thd=0.13,n=15,k=3,dt=2){
   result = {}
   x = as.matrix(x)
   len1 = dim(x)[1]
   stat1 = 0
   stat1 = mclapply(2:(len1-2), 
-                   function(i){s0 = as.matrix(x[1:i,]); s1 = as.matrix(x[(i+1):len1,]); copent::tst(s0,s1,n)}, 
+                   function(i){s0 = as.matrix(x[1:i,]); s1 = as.matrix(x[(i+1):len1,]); copent::tst(s0,s1,n,k,dt)}, 
                    mc.cores = detectCores())
   stat1 = c(0,unlist(stat1))
   if(max(stat1)>thd){
@@ -42,7 +42,7 @@ cpd <- function(x,thd=0.13,n=15){
 }
 }
 
-mcpd <- function(x,maxp=5,thd=0.13,minseglen=10,n=30){
+mcpd <- function(x,maxp=5,thd=0.13,minseglen=10,n=30,k=3,dt=2){
   mresult = {}
   x = as.matrix(x)
   len1 = dim(x)[1]
@@ -50,7 +50,7 @@ mcpd <- function(x,maxp=5,thd=0.13,minseglen=10,n=30){
   k = 1
   for(i in 1:maxp){
     if(i>dim(bisegs)[1]){ break } 
-    ri = cpd(x[bisegs[i,1]:bisegs[i,2],],thd,n)
+    ri = cpd(x[bisegs[i,1]:bisegs[i,2],],thd,n,k,dt)
     if(!is.null(ri)){
       ri$pos = ri$pos + bisegs[i,1] - 1
       mresult$maxstat[k] = ri$maxstat
