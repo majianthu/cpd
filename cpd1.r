@@ -1,4 +1,4 @@
-library(doParallel)
+library(parallel)
 library(copent)
 library(changepoint)
 library(ecp)
@@ -23,21 +23,14 @@ library(mscp)
 library(L2hdchange)
 library(fpop)
 
-cpd <- function(x,thd=0.13,n=30){
+cpd <- function(x,thd=0.13,n=15){
   result = {}
   x = as.matrix(x)
   len1 = dim(x)[1]
-  stat1 = rep(0,len1-1)
-  
-  ncores = detectCores()
-  registerDoParallel(cores=ncores)
-  
-  stat1 = foreach(i=2:(len1-2)) %dopar%{
-    s0 = as.matrix(x[1:i,])
-    s1 = as.matrix(x[(i+1):len1,])
-    copent::tst(s0,s1,n)
-  }
-
+  stat1 = 0
+  stat1 = mclapply(2:(len1-2), 
+                   function(i){s0 = as.matrix(x[1:i,]); s1 = as.matrix(x[(i+1):len1,]); copent::tst(s0,s1,n)}, 
+                   mc.cores = detectCores())
   stat1 = c(0,unlist(stat1))
   if(max(stat1)>thd){
     result$stats = stat1
@@ -46,6 +39,7 @@ cpd <- function(x,thd=0.13,n=30){
   }
   
   return(result)
+}
 }
 
 mcpd <- function(x,maxp=5,thd=0.13,minseglen=10,n=30){
