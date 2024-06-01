@@ -28,9 +28,11 @@ cpd <- function(x,thd=0.13,n=15,k=3,dt=2){
   x = as.matrix(x)
   len1 = dim(x)[1]
   stat1 = 0
-  stat1 = mclapply(2:(len1-2), 
-                   function(i){s0 = as.matrix(x[1:i,]); s1 = as.matrix(x[(i+1):len1,]); copent::tst(s0,s1,n,k,dt)}, 
-                   mc.cores = detectCores())
+  stat1 = parLapply(
+    cl = makeCluster(detectCores()),
+    X = 2:(len1-2),
+    fun = function(i){s0 = as.matrix(x[1:i,]); s1 = as.matrix(x[(i+1):len1,]); copent::tst(s0,s1,n,k,dt)}
+  )
   stat1 = c(0,unlist(stat1))
   if(max(stat1)>thd){
     result$stats = stat1
