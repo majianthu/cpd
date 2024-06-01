@@ -24,7 +24,6 @@ library(L2hdchange)
 library(fpop)
 
 cpd <- function(x,thd=0.13,n=15,k=3,dt=2){
-  result = {}
   x = as.matrix(x)
   len1 = dim(x)[1]
   stat1 = 0
@@ -38,6 +37,7 @@ cpd <- function(x,thd=0.13,n=15,k=3,dt=2){
   stopCluster(cl)
 
   stat1 = c(0,unlist(stat1))
+  result = {}
   if(max(stat1)>thd){
     result$stats = stat1
     result$maxstat = max(stat1)
