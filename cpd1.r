@@ -22,6 +22,7 @@ library(breakfast)
 library(mscp)
 library(L2hdchange)
 library(fpop)
+library(HDCD)
 
 cpd <- function(x,thd=0.13,n=15,k=3,dt=2){
   x = as.matrix(x)
@@ -105,6 +106,8 @@ wbs1 = changepoints(wbs(x))$cpt.th[[1]]
 breakfast1 = breakfast(x)$cptmodel.list
 mscp1 = mscp(x)
 fpop1 = Fpop(x,n1*4)$t.est
+esac1 = ESAC(t(x))$changepoints
+pilliat1 = Pilliat(t(x))$changepoints
 
 # case 2: mean-var
 x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
@@ -121,6 +124,8 @@ cptnp1 = cpt.np(x)
 mosum1 = mosum(x,G=40)
 snseg1 = SNSeg_Uni(x, paras_to_test = c("mean","variance"))$est_cp
 fpop1 = Fpop(x,n1*4)$t.est
+esac1 = ESAC(t(x))$changepoints
+pilliat1 = Pilliat(t(x))$changepoints
 
 # case 3: var
 x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
@@ -137,6 +142,8 @@ cptnp1 = cpt.np(x)
 mosum1 = mosum(x,G=50)
 snseg1 = SNSeg_Uni(x, paras_to_test = "variance")$est_cp
 fpop1 = Fpop(x,n1*4)$t.est
+esac1 = ESAC(t(x))$changepoints
+pilliat1 = Pilliat(t(x))$changepoints
 
 ### multivariate multiple change points
 rho1 = 0.2; rho2 = 0.8; rho3 = 0.1; rho4 = 0.9
@@ -164,6 +171,8 @@ snseg1 = SNSeg_Multi(x, paras_to_test = "mean")$est_cp
 offline1 = ChangePoints(x)$change_point
 ts_no_nbd1 = ts_hdchange(t(x))
 hdchange1 = hdchange(ts_no_nbd1)$time_stamps
+esac1 = ESAC(t(x))$changepoints
+pilliat1 = Pilliat(t(x))$changepoints
 
 # case 2: mean-var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -187,7 +196,8 @@ snseg1 = SNSeg_Multi(x, paras_to_test = "mean")$est_cp
 offline1 = ChangePoints(x)$change_point
 ts_no_nbd1 = ts_hdchange(t(x))
 hdchange1 = hdchange(ts_no_nbd1)$time_stamps
-
+esac1 = ESAC(t(x))$changepoints
+pilliat1 = Pilliat(t(x))$changepoints
 
 # case 3: var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -211,7 +221,8 @@ snseg1 = SNSeg_Multi(x, paras_to_test = "covariance")$est_cp
 offline1 = ChangePoints(x)$change_point
 ts_no_nbd1 = ts_hdchange(t(x))
 hdchange1 = hdchange(ts_no_nbd1)$time_stamps
-
+esac1 = ESAC(t(x))$changepoints
+pilliat1 = Pilliat(t(x))$changepoints
 
 # case 4: with non-normality
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
