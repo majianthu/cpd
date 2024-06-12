@@ -22,6 +22,7 @@ library(mscp)
 library(L2hdchange)
 library(fpop)
 library(HDCD)
+library(HDDchangepoint) # devtools::install_github("rezadrikvandi/HDDchangepoint")
 
 ### real data
 
@@ -127,6 +128,7 @@ ts_no_nbd1 = ts_hdchange(t(x))
 hdchange1 = hdchange(ts_no_nbd1)$time_stamps
 esac1 = ESAC(t(x))$changepoints
 pilliat1 = Pilliat(t(x))$changepoints
+hdd1 = multiple_changepoint_detection(x)$Detected
 
 # case 2: mean-var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -152,6 +154,7 @@ ts_no_nbd1 = ts_hdchange(t(x))
 hdchange1 = hdchange(ts_no_nbd1)$time_stamps
 esac1 = ESAC(t(x))$changepoints
 pilliat1 = Pilliat(t(x))$changepoints
+hdd1 = multiple_changepoint_detection(x)$Detected
 
 # case 3: var
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
@@ -177,6 +180,7 @@ ts_no_nbd1 = ts_hdchange(t(x))
 hdchange1 = hdchange(ts_no_nbd1)$time_stamps
 esac1 = ESAC(t(x))$changepoints
 pilliat1 = Pilliat(t(x))$changepoints
+hdd1 = multiple_changepoint_detection(x)$Detected
 
 # case 4: with non-normality
 x1 = rmnorm(n1,c(0,0),matrix(c(1,rho1,rho1,1),2,2))
