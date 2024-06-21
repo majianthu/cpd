@@ -23,6 +23,7 @@ library(L2hdchange)
 library(fpop)
 library(HDCD)
 library(HDDchangepoint) # devtools::install_github("rezadrikvandi/HDDchangepoint")
+library(HDcpDetect)
 
 ### real data
 
