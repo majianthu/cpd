@@ -41,8 +41,9 @@ axis(1, at = seq(9,90,by = 20), labels = seq(1880,1960,by = 20))
 lines(x=c(result1$pos,result1$pos)-1, y=c(0,result1$maxstat),col='red')
 
 ### univariate multiple change points
+n1 = 50
 # case 1: mean
-x=c(rnorm(50,0,1),rnorm(50,5,1),rnorm(50,10,1),rnorm(50,3,1))
+x=c(rnorm(n1,0,1),rnorm(n1,5,1),rnorm(n1,10,1),rnorm(n1,3,1))
 mresult1 = mcpd(x)
 cpt1 = cpt.mean(x, method = "BinSeg", Q = 5)
 d = rid(x, M = 1000, tau = "clustering")
@@ -66,7 +67,7 @@ esac1 = ESAC(t(x))$changepoints
 pilliat1 = Pilliat(t(x))$changepoints
 
 # case 2: mean-var
-x=c(rnorm(50,0,1),rnorm(50,5,3),rnorm(50,10,1),rnorm(50,3,10))
+x=c(rnorm(n1,0,1),rnorm(n1,5,3),rnorm(n1,10,1),rnorm(n1,3,10))
 mresult1 = mcpd(x)
 cpt1 = cpt.meanvar(x, method = "BinSeg", Q = 5)
 d = rid(x, M = 1000, tau = "clustering")
@@ -84,7 +85,7 @@ esac1 = ESAC(t(x))$changepoints
 pilliat1 = Pilliat(t(x))$changepoints
 
 # case 3: var
-x=c(rnorm(50,0,1),rnorm(50,0,10),rnorm(50,0,5),rnorm(50,0,1))
+x=c(rnorm(n1,0,1),rnorm(n1,0,10),rnorm(n1,0,5),rnorm(n1,0,1))
 mresult1 = mcpd(x)
 cpt1 = cpt.var(x, method = "BinSeg", Q = 5)
 d = rid(x, M = 1000, tau = "clustering")
